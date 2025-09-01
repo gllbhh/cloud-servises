@@ -174,8 +174,6 @@ During the class, we went through the steps of setting up a virtual machine on [
     ![apache2 Default Page](./week01/img/11.png)  
     **Figure 1.11:** _Apache2 default page showing in the browser_
 
-<div style="page-break-after: always;"></div>
-
 14. With a little help of chat GPT I hve created a dashboard that shows some system Information of my Virtual machine.
 
     a. Run following commands on virtual machine terminal
@@ -192,6 +190,6 @@ During the class, we went through the steps of setting up a virtual machine on [
     c. Visit [http://86.50.169.83/dashboard.php](http://86.50.169.83/dashboard.php) to check it out.
 
     ![apache2 Default Page](./week01/img/12.png)  
-    **Figure 1.12:** _Dashboard panel_
+    **Figure 1.12:** _Apache2 default page showing in the browser_
 
     ***
