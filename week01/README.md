@@ -58,13 +58,13 @@ cd demo
 npx --yes @flydotio/node-demo@latest
 ```
 
-![](./week01/img/1.png)
+![](./img/1.png)
 
 **Figure 1.1:** _Result of the commands above_
 
 Then the app can be started with the `npm run start` command from the terminal.
 
-![](./week01/img/2.png)
+![](./img/2.png)
 
 **Figure 1.2:** _App started_
 
@@ -72,7 +72,7 @@ Then the app can be started with the `npm run start` command from the terminal.
 
 The app is running locally on port 3000. To confirm, go to [http://localhost:3000/](http://localhost:3000/).
 
-![](./week01/img/3.png)
+![](./img/3.png)
 
 **Figure 1.3:** _App increments the counter after every page visit or refresh_
 
@@ -88,7 +88,7 @@ During the class, we went through the steps of setting up a virtual machine on [
 
 1. Set up a myCSC account. We used authentication with Haka:
 
-   ![Haka login](./week01/img/4.png)  
+   ![Haka login](./img/4.png)  
    **Figure 1.4:** _Login page_
 
 <div style="page-break-after: always;"></div>
@@ -97,7 +97,7 @@ During the class, we went through the steps of setting up a virtual machine on [
 
 3. Add a cPouta service to the project.
 
-   ![myCSC project](./week01/img/5.png)  
+   ![myCSC project](./img/5.png)  
    **Figure 1.5:** _myCSC project_
 
 4. Log in to [cPouta service](https://pouta.csc.fi/).
@@ -105,14 +105,14 @@ During the class, we went through the steps of setting up a virtual machine on [
 5. Create a new instance. I chose Ubuntu 24.04, `standard.medium`, and created a new SSH key pair for it.  
    **Important!** An SSH key can only be added to the instance at the moment of creation. I tried to do it afterward and failed.
 
-   ![cPouta instance](./week01/img/6.png)  
+   ![cPouta instance](./img/6.png)  
    **Figure 1.6:** _myCSC project after all settings are applied_
 
 <div style="page-break-after: always;"></div>
 
 6. On the `Network/Floating IPs` tab, create a floating IP and assign it to the instance. This IP address will be used to access the instance.
 
-   ![cPouta instance](./week01/img/7.png)  
+   ![cPouta instance](./img/7.png)  
    **Figure 1.7:** _Floating IP_
 
    > All changes to the instance are applied from the `Actions` button on the right-hand side of the table. For example, to associate a Floating IP, click the dropdown list and select `Associate Floating IP`.
@@ -123,7 +123,7 @@ During the class, we went through the steps of setting up a virtual machine on [
    - Custom TCP rule: port 80 (HTTP).
    - Custom TCP rule: port 443 (HTTPS).
 
-   ![cPouta instance](./week01/img/8.png)  
+   ![cPouta instance](./img/8.png)  
    **Figure 1.8:** _Security group settings_
 
 8. Move the private part of the generated earlier SSH key to the `~\.ssh\` folder.
@@ -152,7 +152,7 @@ During the class, we went through the steps of setting up a virtual machine on [
     ssh cloud69
     ```
 
-    ![SSH connection](./week01/img/9.png)  
+    ![SSH connection](./img/9.png)  
     **Figure 1.9:** _Successful connection to the virtual machine_
 
 12. Run the following commands to install and start the Apache2 service:
@@ -166,12 +166,12 @@ During the class, we went through the steps of setting up a virtual machine on [
     sudo systemctl status apache2
     ```
 
-    ![apache2 status](./week01/img/10.png)  
+    ![apache2 status](./img/10.png)  
     **Figure 1.10:** _Apache2 status_
 
 13. Open the page in a browser: [http://86.50.169.83/](http://86.50.169.83/)
 
-    ![apache2 Default Page](./week01/img/11.png)  
+    ![apache2 Default Page](./img/11.png)  
     **Figure 1.11:** _Apache2 default page showing in the browser_
 
 14. With a little help of chat GPT I hve created a dashboard that shows some system Information of my Virtual machine.
@@ -189,7 +189,7 @@ During the class, we went through the steps of setting up a virtual machine on [
 
     c. Visit [http://86.50.169.83/dashboard.php](http://86.50.169.83/dashboard.php) to check it out.
 
-    ![apache2 Default Page](./week01/img/12.png)  
+    ![apache2 Default Page](./img/12.png)  
     **Figure 1.12:** _Apache2 default page showing in the browser_
 
     ***
