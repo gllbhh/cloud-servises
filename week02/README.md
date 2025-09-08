@@ -27,7 +27,7 @@
 
    Serverless architecture is a way of building and running application without managing the underlying servers of infrastructure. The name might be somewhat misleading (_there is no cloud, it's just someone else's computer_). In this model all the maintaining, updating and scaling is managed by the cloud provider (like AWS, Azure, Google Cloud or Cloudflare Workers). App is commonly split into parts which communicate with each other. In this approach it is common to use FaaS (function as service) or/and BaaS (backend as a service).
 
-   ![](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Jb8-0EvfOjEwPmKJa8HROg.jpeg)  
+   ![](./img/29.webp)  
    **Figure 2.23:** _Image from https://medium.com/javarevisited/do-you-know-everything-about-serverless-architecture-f0cd06c81329_
 
 2. _When it is more feasible solution to use application containers (app virtualization) than full OS virtualization to provide networked services?_
@@ -71,7 +71,7 @@
 
 3. _Compare application containers to microservices_
 
-   An application container is a way of packaging and running an application while the microservice is an archictectural style when an application is split into many small pieces which work together. In other words, a container would be a way to run a microservice but you can run microservices in other environments like virtul machine or serverless environment.
+   An application container is a way of packaging and running an application while the microservice is an archictectural style when an application is split into many small pieces which work together. In other words, a container would be a way to run a microservice but you can run microservices in other environments, like virtual machine or serverless environment.
 
 4. _Describe shortly what is Kubernetes and what alternatives are there?_
 
@@ -90,15 +90,116 @@
      - Google Cloud Run
      - Azure Container Instances / Azure Service Fabric
 
-### [AWS tutorial](https://aws.amazon.com/getting-started/hands-on/build-serverless-web-app-lambda-amplify-bedrock-cognito-gen-ai/)
+<div style="page-break-after: always;"></div>
+
+### AWS tutorial
 
 > #### Overview
 >
 > _In this tutorial, you will learn how to use AWS Amplify to build a serverless web application powered by Generative AI using Amazon Bedrock and the Claude 3 Sonnet foundation model. Users can enter a list of ingredients, and the application will generate delicious recipes based on the input ingredients. The application includes an HTML-based user interface for ingredient submission and a backend web app to request AI-generated recipes._
 
-1. Create an account. I have used my student email and a disposable bank card from Revolut. AWS provides 100$ to use on their platform with the registration.
+Create an account. I have used my student email and a disposable bank card from Revolut. AWS provides 100$ to use on their platform with the registration.
 
-2.
+I was following the [AWS tutorial](https://aws.amazon.com/getting-started/hands-on/build-serverless-web-app-lambda-amplify-bedrock-cognito-gen-ai/) and it was more or less clear. Only issue was that the example commands were missing new line character so it was onle line with multiple commands. Fow simplicity I copied commands to VS Code first and executed them one by one. Every step took way more than 5 minutes for me. Only installing Amplify dependencies took over 5 min.
+
+Request for the Claude 3 Sonnet was somewhat confusing since the interface did not match the tutorial.
+
+When I was trying to run `npx ampx sandbox` command I ran into `[InvalidCredentialError]`. It was quite annoying since the tutorial said nothing about it. I added an access key from aws console web interface and set it up on my machine. One can find the credentials at `~\.aws\credentials`.
+
+But if anything was that easy. First, amplify asked me to do some initial setup in the browser. After that it complained on `./amplify/data/resource.ts` file. On closer look, the example code formatting was completely messed up.
+
+Here is cleaned up contents of my `./amplify/data/resource.ts` file:
+
+```ts
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+
+const schema = a.schema({
+	BedrockResponse: a.customType({
+		body: a.string(),
+		error: a.string(),
+	}),
+
+	askBedrock: a
+		.query()
+		.arguments({ ingredients: a.string().array() })
+		.returns(a.ref("BedrockResponse"))
+		.authorization((allow) => [allow.authenticated()])
+		.handler(
+			a.handler.custom({
+				entry: "./bedrock.js",
+				dataSource: "bedrockDS",
+			})
+		),
+});
+
+export type Schema = ClientSchema<typeof schema>;
+
+export const data = defineData({
+	schema,
+	authorizationModes: {
+		defaultAuthorizationMode: "apiKey",
+		apiKeyAuthorizationMode: {
+			expiresInDays: 30,
+		},
+	},
+});
+```
+
+And after fixing it I saw:
+
+![](./img/23.png)  
+ **Figure 2.23:** _Backend Deployed (?)_
+
+One more fix was needed:
+
+In file `ai-recipe-generator/src/App.tsx`:
+
+```ts
+// Replace line:
+import { Schema } from "../amplify/data/resource";
+
+// with:
+import type { Schema } from "../amplify/data/resource";
+
+// and this:
+
+import { FormEvent, useState } from "react";
+
+// with this:
+import type { FormEvent } from "react";
+```
+
+Then with the amplify sandbox and vite running at the same time it finally worked locally.
+
+![](./img/24.png)  
+ **Figure 2.24:** _Email verification worked_
+
+![](./img/25.png)  
+ **Figure 2.25:** _AI Recepies App running locally after login_
+
+Then I pushed my local changes to github. And after some troubleshooting I finally saw:
+
+![](./img/26.png)  
+ **Figure 2.26:** _Successful deployment_
+
+![](./img/27.png)  
+ **Figure 2.27:** _Login into deployed app_
+
+It worked. I created an account again with my student email and with another email @gmail.com. I tested login feature in private Firefox window and it worked.
+
+![](./img/28.png)  
+ **Figure 2.28:** _Login into deployed app_
+
+![](./img/30.png)  
+ **Figure 2.29:** _Completing this tutorial actually brought 20$ instead of spending it_
+
+I started working on this tutorial at around 11.00. Now it's 17.30 and I am so done. Anyway, for some time app will be up and available [here](https://main.d1apy0hode6yy5.amplifyapp.com/)
+
+> End of mandatory part. Below my documentation on what I did so far:
+
+---
+
+<div style="page-break-after: always;"></div>
 
 ### Create a VM in [Microsoft Azure](https://portal.azure.com/#home) cloud service
 
@@ -264,6 +365,8 @@
 
     ![](./img/18.png)  
      **Figure 2.18:** _Azure CLI installation_
+
+<div style="page-break-after: always;"></div>
 
 10. Reopen the active terminal window and run following commands:
 
