@@ -86,7 +86,7 @@ It seems that the Deployment in my `rahti-test-application` was trying to pull a
 
 I tryied to fix the issue by importing the image once again but OpenShift gave me a warning that the `latest` tag already existed and pointed somewhere else; I needed to retarget the tag with `oc tag` instead of `oc import-image`.
 
-Do I retagged the image into my own project’s ImageStream (csc-rahti-demo:latest in rahti-test-application) and pointed the Deployment at that tag. Now the image is pulled within the same namespace, avoiding cross-namespace auth, and the pods run.
+I retagged the image into my own project’s ImageStream (csc-rahti-demo:latest in rahti-test-application) and pointed the Deployment at that tag. Now the image is pulled within the same namespace, avoiding cross-namespace auth, and the pods run.
 
 ![](./img/7.png)
 
