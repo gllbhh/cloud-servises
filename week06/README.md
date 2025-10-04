@@ -6,9 +6,8 @@
 
 **Email:** [gbulygin@students.oamk.fi](gbulygin@students.oamk.fi)
 
-**Link to VM:** http://86.50.252.209/
-
-**lemp-containers repo (private):** https://github.com/gllbhh/lemp-containers
+**Link to VM:** [http://86.50.252.209/](http://86.50.252.209/)
+**lemp-containers repo (private):** [https://github.com/gllbhh/lemp-containers](https://github.com/gllbhh/lemp-containers)
 
 ## Week 6 Assignment
 
@@ -20,10 +19,12 @@ I started by creating a new VM on cPouta portal. Settings are pretty much the sa
 
 ### Creating file structure for the projects
 
-```powerShell
+````powerShell
 # command adapted for powerShell
 mkdir -Force .\lemp-containers\backend, .\lemp-containers\frontend, .\lemp-containers\db\init
-```
+```\
+
+<div style="page-break-after: always;"></div>
 
 ### Backend files
 
@@ -65,7 +66,7 @@ def index():
 if __name__ == '__main__':
 # Dev-only fallback
     app.run(host='0.0.0.0', port=8000, debug=True)
-```
+````
 
 </details>
 
@@ -80,6 +81,8 @@ mysql-connector-python==9.0.0
 ```
 
 </details>
+
+<div style="page-break-after: always;"></div>
 
 <details>
   <summary>Dockerfile</summary>
@@ -132,6 +135,8 @@ CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "app:app"]
 ```
 
 </details>
+
+<div style="page-break-after: always;"></div>
 
 <details>
 <summary>nginx.conf</summary>
@@ -267,6 +272,8 @@ volumes:
 
 </details>
 
+<div style="page-break-after: always;"></div>
+
 <details>
 <summary>docker-compose.prod.yml</summary>
 
@@ -313,6 +320,8 @@ volumes:
 
 </details>
 
+<div style="page-break-after: always;"></div>
+
 ### Run the container locally
 
 I work on Windows machine, so commands are different from the example.
@@ -335,6 +344,8 @@ Invoke-RestMethod http://127.0.0.1:8080/api | ConvertTo-Json -Depth 10
 ![](./img/3.png)
 
 **Figure 6.3:** _Backend Running locally_
+
+<div style="page-break-after: always;"></div>
 
 ### Build, Tag, and Push Images to Docker Hub
 
@@ -365,6 +376,8 @@ docker push "$env:DOCKERHUB_USERNAME/lemp-backend:latest"
 docker push "$env:DOCKERHUB_USERNAME/lemp-frontend:1.0.0"
 docker push "$env:DOCKERHUB_USERNAME/lemp-frontend:latest"
 ```
+
+<div style="page-break-after: always;"></div>
 
 ### Prepare VM for deployment
 
@@ -409,7 +422,6 @@ newgrp docker
 
 # Run the hello-world test again, this time without sudo
 docker run hello-world
-
 ```
 
 ### Clone repo on VM
@@ -485,7 +497,7 @@ docker compose logs backend --tail=50
 
 ![](./img/5.png)
 
-**Figure 6.5:** _Browser_
+**Figure 6.5:** _Browser View_
 
 ![](./img/6.png)
 
@@ -494,6 +506,8 @@ docker compose logs backend --tail=50
 ### Updating the app
 
 I have updated the `app.py`, `nginx.conf`, and `index.html` files so the display the the time from the database (on my development machine).
+
+<div style="page-break-after: always;"></div>
 
 Then ran following commands:
 
